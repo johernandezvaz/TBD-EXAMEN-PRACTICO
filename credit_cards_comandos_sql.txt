@@ -1,0 +1,1352 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. Todos los derechos reservados.
+
+Instale la versión más reciente de PowerShell para obtener nuevas características y mejoras. https://aka.ms/PSWindows
+
+PS C:\Users\Josep> mysql --local-infile=1 -u root -p credit_cards
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++----------------------+
+| Database             |
++----------------------+
+| agencia              |
+| credit_cards         |
+| geeklogin            |
+| information_schema   |
+| inventario_smartmart |
+| mysql                |
+| performance_schema   |
+| sakila               |
+| sys                  |
+| tbd_1                |
+| world                |
++----------------------+
+11 rows in set (0.01 sec)
+
+mysql> use credit_cards;
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_credit_cards |
++------------------------+
+| tarjetas_credito       |
+| titulares_tarjetas     |
++------------------------+
+2 rows in set (0.01 sec)
+
+mysql> LOAD DATA LOCAL INFILE 'C:\Users\Josep\Documents\csv\credit_card.csv'
+    -> INTO TABLE tarjetas_credito
+    -> FIELDS TERMINATED BY ';'
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+ERROR 2 (HY000): File 'C:UsersJosepDocumentscsvcredit_card.csv' not found (OS errno 2 - No such file or directory)
+mysql> LOAD DATA LOCAL INFILE 'C:\Users\Josep\Documents\csv\credit_card.csv'
+    -> INTO TABLE tarjetas_credito
+    -> FIELDS TERMINATED BY ';'
+    -> LINES TERMINATED BT '\n'
+    -> IGNORE 1 LINES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BT '\n'
+IGNORE 1 LINES' at line 4
+mysql> LOAD DATA LOCAL INFILE 'C:\Users\Josep\Documents\csv\credit_card.csv'
+    -> INTO TABLE tarjetas_credito
+    -> FIELDS TERMINATED BY ';'
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+ERROR 2 (HY000): File 'C:UsersJosepDocumentscsvcredit_card.csv' not found (OS errno 2 - No such file or directory)
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/csv/credit_card.csv'
+    -> INTO TABLE tarjetas_credito
+    -> FIELDS TERMINATED BY ';'
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+Query OK, 16 rows affected, 19984 warnings (0.09 sec)
+Records: 5000  Deleted: 0  Skipped: 4984  Warnings: 19984
+
+mysql> select * from tarjetas_credito limit 100;
++---------------------------+----------------+--------------+------------+-------------+--------------+--------------+
+| card_type                 | card_number    | issuing_bank | issue_date | expiry_date | billing_date | credit_limit |
++---------------------------+----------------+--------------+------------+-------------+--------------+--------------+
+| Diners Club International | 30000181867833 | Diners Club  | 41365      | 47939       | 14           | 21200        |
+| Diners Club International | 30003780087555 | Diners Club  | 41275      | 42005       | 21           | 36000        |
+| Diners Club International | 30003809294968 | Diners Club  | 41153      | 42614       | 21           | 177400       |
+| Diners Club International | 30004738144266 | Diners Club  | 39539      | 41730       | 7            | 26700        |
+| Diners Club International | 30004947254401 | Diners Club  | 41395      | 44317       | 25           | 187200       |
+| Diners Club International | 30005009857023 | Diners Club  | 39692      | 44075       | 1            | 45800        |
+| Diners Club International | 30005030140985 | Diners Club  | 40817      | 47392       | 17           | 138000       |
+| Diners Club International | 30005069556895 | Diners Club  | 42675      | 49249       | 3            | 149800       |
+| Diners Club International | 30006410139399 | Diners Club  | 42522      | 49096       | 2            | 162900       |
+| Diners Club International | 30007851104041 | Diners Club  | 39417      | 41244       | 3            | 130000       |
+| Diners Club International | 30009382242746 | Diners Club  | 42736      | 48580       | 13           | 36000        |
+| Diners Club International | 30010154363470 | Diners Club  | 40148      | 45261       | 15           | 97200        |
+| Diners Club International | 30011168070721 | Diners Club  | 42186      | 45839       | 2            | 143300       |
+| Diners Club International | 30011199446007 | Diners Club  | 42370      | 45292       | 2            | 52600        |
+| Diners Club International | 30012205395451 | Diners Club  | 42675      | 49249       | 17           | 10700        |
+| Diners Club International | 30013024567114 | Diners Club  | 40817      | 48122       | 12           | 158100       |
+| Diners Club International | 30013631747463 | Diners Club  | 39539      | 43556       | 24           | 23600        |
+| Diners Club International | 30015224205957 | Diners Club  | 39173      | 40634       | 3            | 145100       |
+| Diners Club International | 30015566812774 | Diners Club  | 42948      | 44774       | 21           | 29300        |
+| Diners Club International | 30017026160273 | Diners Club  | 42644      | 45566       | 21           | 189600       |
+| Diners Club International | 30017033364710 | Diners Club  | 42767      | 49706       | 1            | 171600       |
+| Diners Club International | 30018927763520 | Diners Club  | 41456      | 43282       | 16           | 81200        |
+| Diners Club International | 30019282429723 | Diners Club  | 42125      | 43221       | 8            | 18800        |
+| Diners Club International | 30020773990462 | Diners Club  | 42644      | 44105       | 4            | 50600        |
+| Diners Club International | 30021130291008 | Diners Club  | 41487      | 46966       | 10           | 161200       |
+| Diners Club International | 30021368540142 | Diners Club  | 41671      | 47880       | 14           | 93100        |
+| Diners Club International | 30022944237955 | Diners Club  | 39965      | 45809       | 15           | 178000       |
+| Diners Club International | 30026848879432 | Diners Club  | 40452      | 45566       | 28           | 107600       |
+| Diners Club International | 30027605385563 | Diners Club  | 42370      | 43831       | 28           | 34900        |
+| Diners Club International | 30030296589436 | Diners Club  | 39142      | 40238       | 28           | 63900        |
+| Diners Club International | 30030415723874 | Diners Club  | 40452      | 46296       | 20           | 155800       |
+| Diners Club International | 30031457468915 | Diners Club  | 39965      | 42156       | 21           | 153100       |
+| Diners Club International | 30035481311793 | Diners Club  | 41426      | 42522       | 23           | 46500        |
+| Diners Club International | 30037396543858 | Diners Club  | 39722      | 41183       | 13           | 147600       |
+| Diners Club International | 30038499424954 | Diners Club  | 39083      | 46023       | 18           | 136200       |
+| Diners Club International | 30038903331738 | Diners Club  | 42036      | 46419       | 2            | 21300        |
+| Diners Club International | 30041713938577 | Diners Club  | 39387      | 46327       | 5            | 130800       |
+| Diners Club International | 30042321117059 | Diners Club  | 41122      | 47696       | 28           | 41600        |
+| Diners Club International | 30043950639660 | Diners Club  | 40575      | 42036       | 11           | 17100        |
+| Diners Club International | 30044619855077 | Diners Club  | 42156      | 47270       | 20           | 98800        |
+| Diners Club International | 30045930327191 | Diners Club  | 39203      | 45413       | 27           | 117800       |
+| Diners Club International | 30046739508429 | Diners Club  | 41518      | 45901       | 13           | 143100       |
+| Diners Club International | 30046810202579 | Diners Club  | 39873      | 40969       | 21           | 53000        |
+| Diners Club International | 30049243221299 | Diners Club  | 41913      | 46661       | 11           | 80300        |
+| Diners Club International | 30051520426864 | Diners Club  | 42461      | 47209       | 16           | 121000       |
+| Diners Club International | 30052120649301 | Diners Club  | 42552      | 49491       | 18           | 167300       |
+| Diners Club International | 30052157164026 | Diners Club  | 42491      | 49430       | 10           | 177100       |
+| Diners Club International | 30054642677976 | Diners Club  | 39417      | 45627       | 17           | 17400        |
+| Diners Club International | 30054900679292 | Diners Club  | 39692      | 45170       | 19           | 196900       |
+| Diners Club International | 30055335345094 | Diners Club  | 40422      | 46266       | 13           | 85000        |
+| Diners Club International | 30056755209828 | Diners Club  | 39142      | 44621       | 8            | 71000        |
+| Diners Club International | 30057745094171 | Diners Club  | 41061      | 42522       | 9            | 185800       |
+| Diners Club International | 30058152970671 | Diners Club  | 42856      | 44682       | 14           | 15900        |
+| Diners Club International | 30058658879921 | Diners Club  | 41609      | 43800       | 9            | 65600        |
+| Diners Club International | 30064555124346 | Diners Club  | 43009      | 48488       | 16           | 17900        |
+| Diners Club International | 30065068773339 | Diners Club  | 42979      | 44440       | 26           | 112900       |
+| Diners Club International | 30065301985781 | Diners Club  | 41791      | 48731       | 3            | 74400        |
+| Diners Club International | 30065494230730 | Diners Club  | 42125      | 47604       | 16           | 110900       |
+| Diners Club International | 30065582173719 | Diners Club  | 42125      | 42491       | 11           | 126100       |
+| Diners Club International | 30067550133626 | Diners Club  | 39692      | 45170       | 27           | 46500        |
+| Diners Club International | 30069258657690 | Diners Club  | 42309      | 44136       | 9            | 117500       |
+| Diners Club International | 30070696104980 | Diners Club  | 40664      | 43221       | 4            | 155600       |
+| Diners Club International | 30070824530742 | Diners Club  | 42156      | 43617       | 10           | 119500       |
+| Diners Club International | 30071651377462 | Diners Club  | 40909      | 47849       | 11           | 184400       |
+| Diners Club International | 30071661285069 | Diners Club  | 39326      | 46631       | 10           | 110600       |
+| Diners Club International | 30071686455804 | Diners Club  | 39995      | 42186       | 26           | 181600       |
+| Diners Club International | 30074099825191 | Diners Club  | 42005      | 46753       | 18           | 67400        |
+| Diners Club International | 30078893982892 | Diners Club  | 42248      | 43709       | 11           | 100800       |
+| Diners Club International | 30079252253248 | Diners Club  | 41913      | 47392       | 3            | 70000        |
+| Diners Club International | 30080548401088 | Diners Club  | 42795      | 50100       | 4            | 116200       |
+| Diners Club International | 30080607116726 | Diners Club  | 42064      | 47178       | 11           | 175800       |
+| Diners Club International | 30080751036597 | Diners Club  | 42887      | 48731       | 3            | 179500       |
+| Diners Club International | 30082419077880 | Diners Club  | 39661      | 40756       | 2            | 176900       |
+| Diners Club International | 30084757948979 | Diners Club  | 39387      | 44136       | 14           | 92800        |
+| Diners Club International | 30084952464640 | Diners Club  | 41456      | 48761       | 6            | 55400        |
+| Diners Club International | 30085042824081 | Diners Club  | 42125      | 43586       | 15           | 156300       |
+| Diners Club International | 30085659560572 | Diners Club  | 39904      | 43556       | 4            | 127200       |
+| Diners Club International | 30087287099254 | Diners Club  | 41944      | 46327       | 27           | 12400        |
+| Diners Club International | 30089783238055 | Diners Club  | 43009      | 45931       | 23           | 182700       |
+| Diners Club International | 30090688821136 | Diners Club  | 40725      | 45839       | 1            | 18800        |
+| Diners Club International | 30090855929472 | Diners Club  | 39417      | 46357       | 15           | 141900       |
+| Diners Club International | 30091523425752 | Diners Club  | 42675      | 48519       | 12           | 146500       |
+| Diners Club International | 30092060259794 | Diners Club  | 42095      | 42826       | 8            | 93300        |
+| Diners Club International | 30092327736170 | Diners Club  | 40422      | 43344       | 20           | 26300        |
+| Diners Club International | 30094213643742 | Diners Club  | 39904      | 41730       | 1            | 78900        |
+| Diners Club International | 30094703756418 | Diners Club  | 42095      | 49400       | 17           | 103400       |
+| Diners Club International | 30095424830754 | Diners Club  | 39814      | 40544       | 5            | 177900       |
+| Diners Club International | 30096216332389 | Diners Club  | 40695      | 43983       | 21           | 139700       |
+| Diners Club International | 30096934321797 | Diners Club  | 42917      | 48030       | 8            | 23300        |
+| Diners Club International | 30098229112451 | Diners Club  | 41760      | 43952       | 15           | 158900       |
+| Diners Club International | 30100237309960 | Diners Club  | 41852      | 42948       | 23           | 28500        |
+| Diners Club International | 30100727523641 | Diners Club  | 39387      | 40848       | 11           | 15000        |
+| Diners Club International | 30102420166330 | Diners Club  | 39722      | 43009       | 22           | 35000        |
+| Diners Club International | 30105157907636 | Diners Club  | 42278      | 46661       | 12           | 82800        |
+| Diners Club International | 30105505268400 | Diners Club  | 39600      | 46539       | 10           | 143900       |
+| Diners Club International | 30106545760992 | Diners Club  | 42309      | 48884       | 6            | 161600       |
+| Diners Club International | 30108119557614 | Diners Club  | 39814      | 40544       | 16           | 56800        |
+| Diners Club International | 30108629701686 | Diners Club  | 41791      | 42156       | 18           | 80700        |
+| Diners Club International | 30110017376725 | Diners Club  | 41974      | 48549       | 1            | 136300       |
+| Diners Club International | 30111991823815 | Diners Club  | 42036      | 43497       | 24           | 178600       |
++---------------------------+----------------+--------------+------------+-------------+--------------+--------------+
+100 rows in set (0.00 sec)
+
+mysql> create database sql_credit_cards;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> use sql_credit_cards;
+Database changed
+mysql> show tables;
+Empty set (0.01 sec)
+
+mysql> CREATE TABLE titulares_tarjetas(
+    -> card_number varchar(16) PRIMARY KEY,
+    -> card_holder_name varchar(50) not null,
+    -> cvv_cvv2 varchar(4) not null,
+    -> card_pin varchar(4) not null);
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> CREATE TABLE tarjetas_credito(
+    -> card_type varchar(25) not null,
+    -> card_number varchar(16) PRIMARY KEY,
+    -> issuing_bank varchar(16) not null,
+    -> issue_date varchar(5) not null,
+    -> expiry_date varchar(5) not null,
+    -> billing_date varchar(2) not null,
+    -> credit_limit varchar(6) not null);
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> show tables;
++----------------------------+
+| Tables_in_sql_credit_cards |
++----------------------------+
+| tarjetas_credito           |
+| titulares_tarjetas         |
++----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/tarjetas_credito.csv'
+    -> INTO TABLE tarjetas_credito
+    -> FIELDS TERMINATED BY ';'
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+Query OK, 1 row affected, 39999 warnings (0.07 sec)
+Records: 5000  Deleted: 0  Skipped: 4999  Warnings: 39999
+
+mysql> SHOW WARNINGS;
++---------+------+-------------------------------------------------------+
+| Level   | Code | Message                                               |
++---------+------+-------------------------------------------------------+
+| Warning | 1265 | Data truncated for column 'card_type' at row 1        |
+| Warning | 1261 | Row 1 doesn't contain data for all columns            |
+| Warning | 1261 | Row 1 doesn't contain data for all columns            |
+| Warning | 1261 | Row 1 doesn't contain data for all columns            |
+| Warning | 1261 | Row 1 doesn't contain data for all columns            |
+| Warning | 1261 | Row 1 doesn't contain data for all columns            |
+| Warning | 1261 | Row 1 doesn't contain data for all columns            |
+| Warning | 1265 | Data truncated for column 'card_type' at row 2        |
+| Warning | 1261 | Row 2 doesn't contain data for all columns            |
+| Warning | 1261 | Row 2 doesn't contain data for all columns            |
+| Warning | 1261 | Row 2 doesn't contain data for all columns            |
+| Warning | 1261 | Row 2 doesn't contain data for all columns            |
+| Warning | 1261 | Row 2 doesn't contain data for all columns            |
+| Warning | 1261 | Row 2 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 3        |
+| Warning | 1261 | Row 3 doesn't contain data for all columns            |
+| Warning | 1261 | Row 3 doesn't contain data for all columns            |
+| Warning | 1261 | Row 3 doesn't contain data for all columns            |
+| Warning | 1261 | Row 3 doesn't contain data for all columns            |
+| Warning | 1261 | Row 3 doesn't contain data for all columns            |
+| Warning | 1261 | Row 3 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 4        |
+| Warning | 1261 | Row 4 doesn't contain data for all columns            |
+| Warning | 1261 | Row 4 doesn't contain data for all columns            |
+| Warning | 1261 | Row 4 doesn't contain data for all columns            |
+| Warning | 1261 | Row 4 doesn't contain data for all columns            |
+| Warning | 1261 | Row 4 doesn't contain data for all columns            |
+| Warning | 1261 | Row 4 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 5        |
+| Warning | 1261 | Row 5 doesn't contain data for all columns            |
+| Warning | 1261 | Row 5 doesn't contain data for all columns            |
+| Warning | 1261 | Row 5 doesn't contain data for all columns            |
+| Warning | 1261 | Row 5 doesn't contain data for all columns            |
+| Warning | 1261 | Row 5 doesn't contain data for all columns            |
+| Warning | 1261 | Row 5 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 6        |
+| Warning | 1261 | Row 6 doesn't contain data for all columns            |
+| Warning | 1261 | Row 6 doesn't contain data for all columns            |
+| Warning | 1261 | Row 6 doesn't contain data for all columns            |
+| Warning | 1261 | Row 6 doesn't contain data for all columns            |
+| Warning | 1261 | Row 6 doesn't contain data for all columns            |
+| Warning | 1261 | Row 6 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 7        |
+| Warning | 1261 | Row 7 doesn't contain data for all columns            |
+| Warning | 1261 | Row 7 doesn't contain data for all columns            |
+| Warning | 1261 | Row 7 doesn't contain data for all columns            |
+| Warning | 1261 | Row 7 doesn't contain data for all columns            |
+| Warning | 1261 | Row 7 doesn't contain data for all columns            |
+| Warning | 1261 | Row 7 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 8        |
+| Warning | 1261 | Row 8 doesn't contain data for all columns            |
+| Warning | 1261 | Row 8 doesn't contain data for all columns            |
+| Warning | 1261 | Row 8 doesn't contain data for all columns            |
+| Warning | 1261 | Row 8 doesn't contain data for all columns            |
+| Warning | 1261 | Row 8 doesn't contain data for all columns            |
+| Warning | 1261 | Row 8 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 9        |
+| Warning | 1261 | Row 9 doesn't contain data for all columns            |
+| Warning | 1261 | Row 9 doesn't contain data for all columns            |
+| Warning | 1261 | Row 9 doesn't contain data for all columns            |
+| Warning | 1261 | Row 9 doesn't contain data for all columns            |
+| Warning | 1261 | Row 9 doesn't contain data for all columns            |
+| Warning | 1261 | Row 9 doesn't contain data for all columns            |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 10       |
+| Warning | 1261 | Row 10 doesn't contain data for all columns           |
+| Warning | 1261 | Row 10 doesn't contain data for all columns           |
+| Warning | 1261 | Row 10 doesn't contain data for all columns           |
+| Warning | 1261 | Row 10 doesn't contain data for all columns           |
+| Warning | 1261 | Row 10 doesn't contain data for all columns           |
+| Warning | 1261 | Row 10 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 11       |
+| Warning | 1261 | Row 11 doesn't contain data for all columns           |
+| Warning | 1261 | Row 11 doesn't contain data for all columns           |
+| Warning | 1261 | Row 11 doesn't contain data for all columns           |
+| Warning | 1261 | Row 11 doesn't contain data for all columns           |
+| Warning | 1261 | Row 11 doesn't contain data for all columns           |
+| Warning | 1261 | Row 11 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 12       |
+| Warning | 1261 | Row 12 doesn't contain data for all columns           |
+| Warning | 1261 | Row 12 doesn't contain data for all columns           |
+| Warning | 1261 | Row 12 doesn't contain data for all columns           |
+| Warning | 1261 | Row 12 doesn't contain data for all columns           |
+| Warning | 1261 | Row 12 doesn't contain data for all columns           |
+| Warning | 1261 | Row 12 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 13       |
+| Warning | 1261 | Row 13 doesn't contain data for all columns           |
+| Warning | 1261 | Row 13 doesn't contain data for all columns           |
+| Warning | 1261 | Row 13 doesn't contain data for all columns           |
+| Warning | 1261 | Row 13 doesn't contain data for all columns           |
+| Warning | 1261 | Row 13 doesn't contain data for all columns           |
+| Warning | 1261 | Row 13 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 14       |
+| Warning | 1261 | Row 14 doesn't contain data for all columns           |
+| Warning | 1261 | Row 14 doesn't contain data for all columns           |
+| Warning | 1261 | Row 14 doesn't contain data for all columns           |
+| Warning | 1261 | Row 14 doesn't contain data for all columns           |
+| Warning | 1261 | Row 14 doesn't contain data for all columns           |
+| Warning | 1261 | Row 14 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 15       |
+| Warning | 1261 | Row 15 doesn't contain data for all columns           |
+| Warning | 1261 | Row 15 doesn't contain data for all columns           |
+| Warning | 1261 | Row 15 doesn't contain data for all columns           |
+| Warning | 1261 | Row 15 doesn't contain data for all columns           |
+| Warning | 1261 | Row 15 doesn't contain data for all columns           |
+| Warning | 1261 | Row 15 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 16       |
+| Warning | 1261 | Row 16 doesn't contain data for all columns           |
+| Warning | 1261 | Row 16 doesn't contain data for all columns           |
+| Warning | 1261 | Row 16 doesn't contain data for all columns           |
+| Warning | 1261 | Row 16 doesn't contain data for all columns           |
+| Warning | 1261 | Row 16 doesn't contain data for all columns           |
+| Warning | 1261 | Row 16 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 17       |
+| Warning | 1261 | Row 17 doesn't contain data for all columns           |
+| Warning | 1261 | Row 17 doesn't contain data for all columns           |
+| Warning | 1261 | Row 17 doesn't contain data for all columns           |
+| Warning | 1261 | Row 17 doesn't contain data for all columns           |
+| Warning | 1261 | Row 17 doesn't contain data for all columns           |
+| Warning | 1261 | Row 17 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 18       |
+| Warning | 1261 | Row 18 doesn't contain data for all columns           |
+| Warning | 1261 | Row 18 doesn't contain data for all columns           |
+| Warning | 1261 | Row 18 doesn't contain data for all columns           |
+| Warning | 1261 | Row 18 doesn't contain data for all columns           |
+| Warning | 1261 | Row 18 doesn't contain data for all columns           |
+| Warning | 1261 | Row 18 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 19       |
+| Warning | 1261 | Row 19 doesn't contain data for all columns           |
+| Warning | 1261 | Row 19 doesn't contain data for all columns           |
+| Warning | 1261 | Row 19 doesn't contain data for all columns           |
+| Warning | 1261 | Row 19 doesn't contain data for all columns           |
+| Warning | 1261 | Row 19 doesn't contain data for all columns           |
+| Warning | 1261 | Row 19 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 20       |
+| Warning | 1261 | Row 20 doesn't contain data for all columns           |
+| Warning | 1261 | Row 20 doesn't contain data for all columns           |
+| Warning | 1261 | Row 20 doesn't contain data for all columns           |
+| Warning | 1261 | Row 20 doesn't contain data for all columns           |
+| Warning | 1261 | Row 20 doesn't contain data for all columns           |
+| Warning | 1261 | Row 20 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 21       |
+| Warning | 1261 | Row 21 doesn't contain data for all columns           |
+| Warning | 1261 | Row 21 doesn't contain data for all columns           |
+| Warning | 1261 | Row 21 doesn't contain data for all columns           |
+| Warning | 1261 | Row 21 doesn't contain data for all columns           |
+| Warning | 1261 | Row 21 doesn't contain data for all columns           |
+| Warning | 1261 | Row 21 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 22       |
+| Warning | 1261 | Row 22 doesn't contain data for all columns           |
+| Warning | 1261 | Row 22 doesn't contain data for all columns           |
+| Warning | 1261 | Row 22 doesn't contain data for all columns           |
+| Warning | 1261 | Row 22 doesn't contain data for all columns           |
+| Warning | 1261 | Row 22 doesn't contain data for all columns           |
+| Warning | 1261 | Row 22 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 23       |
+| Warning | 1261 | Row 23 doesn't contain data for all columns           |
+| Warning | 1261 | Row 23 doesn't contain data for all columns           |
+| Warning | 1261 | Row 23 doesn't contain data for all columns           |
+| Warning | 1261 | Row 23 doesn't contain data for all columns           |
+| Warning | 1261 | Row 23 doesn't contain data for all columns           |
+| Warning | 1261 | Row 23 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 24       |
+| Warning | 1261 | Row 24 doesn't contain data for all columns           |
+| Warning | 1261 | Row 24 doesn't contain data for all columns           |
+| Warning | 1261 | Row 24 doesn't contain data for all columns           |
+| Warning | 1261 | Row 24 doesn't contain data for all columns           |
+| Warning | 1261 | Row 24 doesn't contain data for all columns           |
+| Warning | 1261 | Row 24 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 25       |
+| Warning | 1261 | Row 25 doesn't contain data for all columns           |
+| Warning | 1261 | Row 25 doesn't contain data for all columns           |
+| Warning | 1261 | Row 25 doesn't contain data for all columns           |
+| Warning | 1261 | Row 25 doesn't contain data for all columns           |
+| Warning | 1261 | Row 25 doesn't contain data for all columns           |
+| Warning | 1261 | Row 25 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 26       |
+| Warning | 1261 | Row 26 doesn't contain data for all columns           |
+| Warning | 1261 | Row 26 doesn't contain data for all columns           |
+| Warning | 1261 | Row 26 doesn't contain data for all columns           |
+| Warning | 1261 | Row 26 doesn't contain data for all columns           |
+| Warning | 1261 | Row 26 doesn't contain data for all columns           |
+| Warning | 1261 | Row 26 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 27       |
+| Warning | 1261 | Row 27 doesn't contain data for all columns           |
+| Warning | 1261 | Row 27 doesn't contain data for all columns           |
+| Warning | 1261 | Row 27 doesn't contain data for all columns           |
+| Warning | 1261 | Row 27 doesn't contain data for all columns           |
+| Warning | 1261 | Row 27 doesn't contain data for all columns           |
+| Warning | 1261 | Row 27 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 28       |
+| Warning | 1261 | Row 28 doesn't contain data for all columns           |
+| Warning | 1261 | Row 28 doesn't contain data for all columns           |
+| Warning | 1261 | Row 28 doesn't contain data for all columns           |
+| Warning | 1261 | Row 28 doesn't contain data for all columns           |
+| Warning | 1261 | Row 28 doesn't contain data for all columns           |
+| Warning | 1261 | Row 28 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 29       |
+| Warning | 1261 | Row 29 doesn't contain data for all columns           |
+| Warning | 1261 | Row 29 doesn't contain data for all columns           |
+| Warning | 1261 | Row 29 doesn't contain data for all columns           |
+| Warning | 1261 | Row 29 doesn't contain data for all columns           |
+| Warning | 1261 | Row 29 doesn't contain data for all columns           |
+| Warning | 1261 | Row 29 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 30       |
+| Warning | 1261 | Row 30 doesn't contain data for all columns           |
+| Warning | 1261 | Row 30 doesn't contain data for all columns           |
+| Warning | 1261 | Row 30 doesn't contain data for all columns           |
+| Warning | 1261 | Row 30 doesn't contain data for all columns           |
+| Warning | 1261 | Row 30 doesn't contain data for all columns           |
+| Warning | 1261 | Row 30 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 31       |
+| Warning | 1261 | Row 31 doesn't contain data for all columns           |
+| Warning | 1261 | Row 31 doesn't contain data for all columns           |
+| Warning | 1261 | Row 31 doesn't contain data for all columns           |
+| Warning | 1261 | Row 31 doesn't contain data for all columns           |
+| Warning | 1261 | Row 31 doesn't contain data for all columns           |
+| Warning | 1261 | Row 31 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 32       |
+| Warning | 1261 | Row 32 doesn't contain data for all columns           |
+| Warning | 1261 | Row 32 doesn't contain data for all columns           |
+| Warning | 1261 | Row 32 doesn't contain data for all columns           |
+| Warning | 1261 | Row 32 doesn't contain data for all columns           |
+| Warning | 1261 | Row 32 doesn't contain data for all columns           |
+| Warning | 1261 | Row 32 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 33       |
+| Warning | 1261 | Row 33 doesn't contain data for all columns           |
+| Warning | 1261 | Row 33 doesn't contain data for all columns           |
+| Warning | 1261 | Row 33 doesn't contain data for all columns           |
+| Warning | 1261 | Row 33 doesn't contain data for all columns           |
+| Warning | 1261 | Row 33 doesn't contain data for all columns           |
+| Warning | 1261 | Row 33 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 34       |
+| Warning | 1261 | Row 34 doesn't contain data for all columns           |
+| Warning | 1261 | Row 34 doesn't contain data for all columns           |
+| Warning | 1261 | Row 34 doesn't contain data for all columns           |
+| Warning | 1261 | Row 34 doesn't contain data for all columns           |
+| Warning | 1261 | Row 34 doesn't contain data for all columns           |
+| Warning | 1261 | Row 34 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 35       |
+| Warning | 1261 | Row 35 doesn't contain data for all columns           |
+| Warning | 1261 | Row 35 doesn't contain data for all columns           |
+| Warning | 1261 | Row 35 doesn't contain data for all columns           |
+| Warning | 1261 | Row 35 doesn't contain data for all columns           |
+| Warning | 1261 | Row 35 doesn't contain data for all columns           |
+| Warning | 1261 | Row 35 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 36       |
+| Warning | 1261 | Row 36 doesn't contain data for all columns           |
+| Warning | 1261 | Row 36 doesn't contain data for all columns           |
+| Warning | 1261 | Row 36 doesn't contain data for all columns           |
+| Warning | 1261 | Row 36 doesn't contain data for all columns           |
+| Warning | 1261 | Row 36 doesn't contain data for all columns           |
+| Warning | 1261 | Row 36 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 37       |
+| Warning | 1261 | Row 37 doesn't contain data for all columns           |
+| Warning | 1261 | Row 37 doesn't contain data for all columns           |
+| Warning | 1261 | Row 37 doesn't contain data for all columns           |
+| Warning | 1261 | Row 37 doesn't contain data for all columns           |
+| Warning | 1261 | Row 37 doesn't contain data for all columns           |
+| Warning | 1261 | Row 37 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 38       |
+| Warning | 1261 | Row 38 doesn't contain data for all columns           |
+| Warning | 1261 | Row 38 doesn't contain data for all columns           |
+| Warning | 1261 | Row 38 doesn't contain data for all columns           |
+| Warning | 1261 | Row 38 doesn't contain data for all columns           |
+| Warning | 1261 | Row 38 doesn't contain data for all columns           |
+| Warning | 1261 | Row 38 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 39       |
+| Warning | 1261 | Row 39 doesn't contain data for all columns           |
+| Warning | 1261 | Row 39 doesn't contain data for all columns           |
+| Warning | 1261 | Row 39 doesn't contain data for all columns           |
+| Warning | 1261 | Row 39 doesn't contain data for all columns           |
+| Warning | 1261 | Row 39 doesn't contain data for all columns           |
+| Warning | 1261 | Row 39 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 40       |
+| Warning | 1261 | Row 40 doesn't contain data for all columns           |
+| Warning | 1261 | Row 40 doesn't contain data for all columns           |
+| Warning | 1261 | Row 40 doesn't contain data for all columns           |
+| Warning | 1261 | Row 40 doesn't contain data for all columns           |
+| Warning | 1261 | Row 40 doesn't contain data for all columns           |
+| Warning | 1261 | Row 40 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 41       |
+| Warning | 1261 | Row 41 doesn't contain data for all columns           |
+| Warning | 1261 | Row 41 doesn't contain data for all columns           |
+| Warning | 1261 | Row 41 doesn't contain data for all columns           |
+| Warning | 1261 | Row 41 doesn't contain data for all columns           |
+| Warning | 1261 | Row 41 doesn't contain data for all columns           |
+| Warning | 1261 | Row 41 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 42       |
+| Warning | 1261 | Row 42 doesn't contain data for all columns           |
+| Warning | 1261 | Row 42 doesn't contain data for all columns           |
+| Warning | 1261 | Row 42 doesn't contain data for all columns           |
+| Warning | 1261 | Row 42 doesn't contain data for all columns           |
+| Warning | 1261 | Row 42 doesn't contain data for all columns           |
+| Warning | 1261 | Row 42 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 43       |
+| Warning | 1261 | Row 43 doesn't contain data for all columns           |
+| Warning | 1261 | Row 43 doesn't contain data for all columns           |
+| Warning | 1261 | Row 43 doesn't contain data for all columns           |
+| Warning | 1261 | Row 43 doesn't contain data for all columns           |
+| Warning | 1261 | Row 43 doesn't contain data for all columns           |
+| Warning | 1261 | Row 43 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 44       |
+| Warning | 1261 | Row 44 doesn't contain data for all columns           |
+| Warning | 1261 | Row 44 doesn't contain data for all columns           |
+| Warning | 1261 | Row 44 doesn't contain data for all columns           |
+| Warning | 1261 | Row 44 doesn't contain data for all columns           |
+| Warning | 1261 | Row 44 doesn't contain data for all columns           |
+| Warning | 1261 | Row 44 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 45       |
+| Warning | 1261 | Row 45 doesn't contain data for all columns           |
+| Warning | 1261 | Row 45 doesn't contain data for all columns           |
+| Warning | 1261 | Row 45 doesn't contain data for all columns           |
+| Warning | 1261 | Row 45 doesn't contain data for all columns           |
+| Warning | 1261 | Row 45 doesn't contain data for all columns           |
+| Warning | 1261 | Row 45 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 46       |
+| Warning | 1261 | Row 46 doesn't contain data for all columns           |
+| Warning | 1261 | Row 46 doesn't contain data for all columns           |
+| Warning | 1261 | Row 46 doesn't contain data for all columns           |
+| Warning | 1261 | Row 46 doesn't contain data for all columns           |
+| Warning | 1261 | Row 46 doesn't contain data for all columns           |
+| Warning | 1261 | Row 46 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 47       |
+| Warning | 1261 | Row 47 doesn't contain data for all columns           |
+| Warning | 1261 | Row 47 doesn't contain data for all columns           |
+| Warning | 1261 | Row 47 doesn't contain data for all columns           |
+| Warning | 1261 | Row 47 doesn't contain data for all columns           |
+| Warning | 1261 | Row 47 doesn't contain data for all columns           |
+| Warning | 1261 | Row 47 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 48       |
+| Warning | 1261 | Row 48 doesn't contain data for all columns           |
+| Warning | 1261 | Row 48 doesn't contain data for all columns           |
+| Warning | 1261 | Row 48 doesn't contain data for all columns           |
+| Warning | 1261 | Row 48 doesn't contain data for all columns           |
+| Warning | 1261 | Row 48 doesn't contain data for all columns           |
+| Warning | 1261 | Row 48 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 49       |
+| Warning | 1261 | Row 49 doesn't contain data for all columns           |
+| Warning | 1261 | Row 49 doesn't contain data for all columns           |
+| Warning | 1261 | Row 49 doesn't contain data for all columns           |
+| Warning | 1261 | Row 49 doesn't contain data for all columns           |
+| Warning | 1261 | Row 49 doesn't contain data for all columns           |
+| Warning | 1261 | Row 49 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 50       |
+| Warning | 1261 | Row 50 doesn't contain data for all columns           |
+| Warning | 1261 | Row 50 doesn't contain data for all columns           |
+| Warning | 1261 | Row 50 doesn't contain data for all columns           |
+| Warning | 1261 | Row 50 doesn't contain data for all columns           |
+| Warning | 1261 | Row 50 doesn't contain data for all columns           |
+| Warning | 1261 | Row 50 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 51       |
+| Warning | 1261 | Row 51 doesn't contain data for all columns           |
+| Warning | 1261 | Row 51 doesn't contain data for all columns           |
+| Warning | 1261 | Row 51 doesn't contain data for all columns           |
+| Warning | 1261 | Row 51 doesn't contain data for all columns           |
+| Warning | 1261 | Row 51 doesn't contain data for all columns           |
+| Warning | 1261 | Row 51 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 52       |
+| Warning | 1261 | Row 52 doesn't contain data for all columns           |
+| Warning | 1261 | Row 52 doesn't contain data for all columns           |
+| Warning | 1261 | Row 52 doesn't contain data for all columns           |
+| Warning | 1261 | Row 52 doesn't contain data for all columns           |
+| Warning | 1261 | Row 52 doesn't contain data for all columns           |
+| Warning | 1261 | Row 52 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 53       |
+| Warning | 1261 | Row 53 doesn't contain data for all columns           |
+| Warning | 1261 | Row 53 doesn't contain data for all columns           |
+| Warning | 1261 | Row 53 doesn't contain data for all columns           |
+| Warning | 1261 | Row 53 doesn't contain data for all columns           |
+| Warning | 1261 | Row 53 doesn't contain data for all columns           |
+| Warning | 1261 | Row 53 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 54       |
+| Warning | 1261 | Row 54 doesn't contain data for all columns           |
+| Warning | 1261 | Row 54 doesn't contain data for all columns           |
+| Warning | 1261 | Row 54 doesn't contain data for all columns           |
+| Warning | 1261 | Row 54 doesn't contain data for all columns           |
+| Warning | 1261 | Row 54 doesn't contain data for all columns           |
+| Warning | 1261 | Row 54 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 55       |
+| Warning | 1261 | Row 55 doesn't contain data for all columns           |
+| Warning | 1261 | Row 55 doesn't contain data for all columns           |
+| Warning | 1261 | Row 55 doesn't contain data for all columns           |
+| Warning | 1261 | Row 55 doesn't contain data for all columns           |
+| Warning | 1261 | Row 55 doesn't contain data for all columns           |
+| Warning | 1261 | Row 55 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 56       |
+| Warning | 1261 | Row 56 doesn't contain data for all columns           |
+| Warning | 1261 | Row 56 doesn't contain data for all columns           |
+| Warning | 1261 | Row 56 doesn't contain data for all columns           |
+| Warning | 1261 | Row 56 doesn't contain data for all columns           |
+| Warning | 1261 | Row 56 doesn't contain data for all columns           |
+| Warning | 1261 | Row 56 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 57       |
+| Warning | 1261 | Row 57 doesn't contain data for all columns           |
+| Warning | 1261 | Row 57 doesn't contain data for all columns           |
+| Warning | 1261 | Row 57 doesn't contain data for all columns           |
+| Warning | 1261 | Row 57 doesn't contain data for all columns           |
+| Warning | 1261 | Row 57 doesn't contain data for all columns           |
+| Warning | 1261 | Row 57 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 58       |
+| Warning | 1261 | Row 58 doesn't contain data for all columns           |
+| Warning | 1261 | Row 58 doesn't contain data for all columns           |
+| Warning | 1261 | Row 58 doesn't contain data for all columns           |
+| Warning | 1261 | Row 58 doesn't contain data for all columns           |
+| Warning | 1261 | Row 58 doesn't contain data for all columns           |
+| Warning | 1261 | Row 58 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 59       |
+| Warning | 1261 | Row 59 doesn't contain data for all columns           |
+| Warning | 1261 | Row 59 doesn't contain data for all columns           |
+| Warning | 1261 | Row 59 doesn't contain data for all columns           |
+| Warning | 1261 | Row 59 doesn't contain data for all columns           |
+| Warning | 1261 | Row 59 doesn't contain data for all columns           |
+| Warning | 1261 | Row 59 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 60       |
+| Warning | 1261 | Row 60 doesn't contain data for all columns           |
+| Warning | 1261 | Row 60 doesn't contain data for all columns           |
+| Warning | 1261 | Row 60 doesn't contain data for all columns           |
+| Warning | 1261 | Row 60 doesn't contain data for all columns           |
+| Warning | 1261 | Row 60 doesn't contain data for all columns           |
+| Warning | 1261 | Row 60 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 61       |
+| Warning | 1261 | Row 61 doesn't contain data for all columns           |
+| Warning | 1261 | Row 61 doesn't contain data for all columns           |
+| Warning | 1261 | Row 61 doesn't contain data for all columns           |
+| Warning | 1261 | Row 61 doesn't contain data for all columns           |
+| Warning | 1261 | Row 61 doesn't contain data for all columns           |
+| Warning | 1261 | Row 61 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 62       |
+| Warning | 1261 | Row 62 doesn't contain data for all columns           |
+| Warning | 1261 | Row 62 doesn't contain data for all columns           |
+| Warning | 1261 | Row 62 doesn't contain data for all columns           |
+| Warning | 1261 | Row 62 doesn't contain data for all columns           |
+| Warning | 1261 | Row 62 doesn't contain data for all columns           |
+| Warning | 1261 | Row 62 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 63       |
+| Warning | 1261 | Row 63 doesn't contain data for all columns           |
+| Warning | 1261 | Row 63 doesn't contain data for all columns           |
+| Warning | 1261 | Row 63 doesn't contain data for all columns           |
+| Warning | 1261 | Row 63 doesn't contain data for all columns           |
+| Warning | 1261 | Row 63 doesn't contain data for all columns           |
+| Warning | 1261 | Row 63 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 64       |
+| Warning | 1261 | Row 64 doesn't contain data for all columns           |
+| Warning | 1261 | Row 64 doesn't contain data for all columns           |
+| Warning | 1261 | Row 64 doesn't contain data for all columns           |
+| Warning | 1261 | Row 64 doesn't contain data for all columns           |
+| Warning | 1261 | Row 64 doesn't contain data for all columns           |
+| Warning | 1261 | Row 64 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 65       |
+| Warning | 1261 | Row 65 doesn't contain data for all columns           |
+| Warning | 1261 | Row 65 doesn't contain data for all columns           |
+| Warning | 1261 | Row 65 doesn't contain data for all columns           |
+| Warning | 1261 | Row 65 doesn't contain data for all columns           |
+| Warning | 1261 | Row 65 doesn't contain data for all columns           |
+| Warning | 1261 | Row 65 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 66       |
+| Warning | 1261 | Row 66 doesn't contain data for all columns           |
+| Warning | 1261 | Row 66 doesn't contain data for all columns           |
+| Warning | 1261 | Row 66 doesn't contain data for all columns           |
+| Warning | 1261 | Row 66 doesn't contain data for all columns           |
+| Warning | 1261 | Row 66 doesn't contain data for all columns           |
+| Warning | 1261 | Row 66 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 67       |
+| Warning | 1261 | Row 67 doesn't contain data for all columns           |
+| Warning | 1261 | Row 67 doesn't contain data for all columns           |
+| Warning | 1261 | Row 67 doesn't contain data for all columns           |
+| Warning | 1261 | Row 67 doesn't contain data for all columns           |
+| Warning | 1261 | Row 67 doesn't contain data for all columns           |
+| Warning | 1261 | Row 67 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 68       |
+| Warning | 1261 | Row 68 doesn't contain data for all columns           |
+| Warning | 1261 | Row 68 doesn't contain data for all columns           |
+| Warning | 1261 | Row 68 doesn't contain data for all columns           |
+| Warning | 1261 | Row 68 doesn't contain data for all columns           |
+| Warning | 1261 | Row 68 doesn't contain data for all columns           |
+| Warning | 1261 | Row 68 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 69       |
+| Warning | 1261 | Row 69 doesn't contain data for all columns           |
+| Warning | 1261 | Row 69 doesn't contain data for all columns           |
+| Warning | 1261 | Row 69 doesn't contain data for all columns           |
+| Warning | 1261 | Row 69 doesn't contain data for all columns           |
+| Warning | 1261 | Row 69 doesn't contain data for all columns           |
+| Warning | 1261 | Row 69 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 70       |
+| Warning | 1261 | Row 70 doesn't contain data for all columns           |
+| Warning | 1261 | Row 70 doesn't contain data for all columns           |
+| Warning | 1261 | Row 70 doesn't contain data for all columns           |
+| Warning | 1261 | Row 70 doesn't contain data for all columns           |
+| Warning | 1261 | Row 70 doesn't contain data for all columns           |
+| Warning | 1261 | Row 70 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 71       |
+| Warning | 1261 | Row 71 doesn't contain data for all columns           |
+| Warning | 1261 | Row 71 doesn't contain data for all columns           |
+| Warning | 1261 | Row 71 doesn't contain data for all columns           |
+| Warning | 1261 | Row 71 doesn't contain data for all columns           |
+| Warning | 1261 | Row 71 doesn't contain data for all columns           |
+| Warning | 1261 | Row 71 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 72       |
+| Warning | 1261 | Row 72 doesn't contain data for all columns           |
+| Warning | 1261 | Row 72 doesn't contain data for all columns           |
+| Warning | 1261 | Row 72 doesn't contain data for all columns           |
+| Warning | 1261 | Row 72 doesn't contain data for all columns           |
+| Warning | 1261 | Row 72 doesn't contain data for all columns           |
+| Warning | 1261 | Row 72 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 73       |
+| Warning | 1261 | Row 73 doesn't contain data for all columns           |
+| Warning | 1261 | Row 73 doesn't contain data for all columns           |
+| Warning | 1261 | Row 73 doesn't contain data for all columns           |
+| Warning | 1261 | Row 73 doesn't contain data for all columns           |
+| Warning | 1261 | Row 73 doesn't contain data for all columns           |
+| Warning | 1261 | Row 73 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 74       |
+| Warning | 1261 | Row 74 doesn't contain data for all columns           |
+| Warning | 1261 | Row 74 doesn't contain data for all columns           |
+| Warning | 1261 | Row 74 doesn't contain data for all columns           |
+| Warning | 1261 | Row 74 doesn't contain data for all columns           |
+| Warning | 1261 | Row 74 doesn't contain data for all columns           |
+| Warning | 1261 | Row 74 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 75       |
+| Warning | 1261 | Row 75 doesn't contain data for all columns           |
+| Warning | 1261 | Row 75 doesn't contain data for all columns           |
+| Warning | 1261 | Row 75 doesn't contain data for all columns           |
+| Warning | 1261 | Row 75 doesn't contain data for all columns           |
+| Warning | 1261 | Row 75 doesn't contain data for all columns           |
+| Warning | 1261 | Row 75 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 76       |
+| Warning | 1261 | Row 76 doesn't contain data for all columns           |
+| Warning | 1261 | Row 76 doesn't contain data for all columns           |
+| Warning | 1261 | Row 76 doesn't contain data for all columns           |
+| Warning | 1261 | Row 76 doesn't contain data for all columns           |
+| Warning | 1261 | Row 76 doesn't contain data for all columns           |
+| Warning | 1261 | Row 76 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 77       |
+| Warning | 1261 | Row 77 doesn't contain data for all columns           |
+| Warning | 1261 | Row 77 doesn't contain data for all columns           |
+| Warning | 1261 | Row 77 doesn't contain data for all columns           |
+| Warning | 1261 | Row 77 doesn't contain data for all columns           |
+| Warning | 1261 | Row 77 doesn't contain data for all columns           |
+| Warning | 1261 | Row 77 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 78       |
+| Warning | 1261 | Row 78 doesn't contain data for all columns           |
+| Warning | 1261 | Row 78 doesn't contain data for all columns           |
+| Warning | 1261 | Row 78 doesn't contain data for all columns           |
+| Warning | 1261 | Row 78 doesn't contain data for all columns           |
+| Warning | 1261 | Row 78 doesn't contain data for all columns           |
+| Warning | 1261 | Row 78 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 79       |
+| Warning | 1261 | Row 79 doesn't contain data for all columns           |
+| Warning | 1261 | Row 79 doesn't contain data for all columns           |
+| Warning | 1261 | Row 79 doesn't contain data for all columns           |
+| Warning | 1261 | Row 79 doesn't contain data for all columns           |
+| Warning | 1261 | Row 79 doesn't contain data for all columns           |
+| Warning | 1261 | Row 79 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 80       |
+| Warning | 1261 | Row 80 doesn't contain data for all columns           |
+| Warning | 1261 | Row 80 doesn't contain data for all columns           |
+| Warning | 1261 | Row 80 doesn't contain data for all columns           |
+| Warning | 1261 | Row 80 doesn't contain data for all columns           |
+| Warning | 1261 | Row 80 doesn't contain data for all columns           |
+| Warning | 1261 | Row 80 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 81       |
+| Warning | 1261 | Row 81 doesn't contain data for all columns           |
+| Warning | 1261 | Row 81 doesn't contain data for all columns           |
+| Warning | 1261 | Row 81 doesn't contain data for all columns           |
+| Warning | 1261 | Row 81 doesn't contain data for all columns           |
+| Warning | 1261 | Row 81 doesn't contain data for all columns           |
+| Warning | 1261 | Row 81 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 82       |
+| Warning | 1261 | Row 82 doesn't contain data for all columns           |
+| Warning | 1261 | Row 82 doesn't contain data for all columns           |
+| Warning | 1261 | Row 82 doesn't contain data for all columns           |
+| Warning | 1261 | Row 82 doesn't contain data for all columns           |
+| Warning | 1261 | Row 82 doesn't contain data for all columns           |
+| Warning | 1261 | Row 82 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 83       |
+| Warning | 1261 | Row 83 doesn't contain data for all columns           |
+| Warning | 1261 | Row 83 doesn't contain data for all columns           |
+| Warning | 1261 | Row 83 doesn't contain data for all columns           |
+| Warning | 1261 | Row 83 doesn't contain data for all columns           |
+| Warning | 1261 | Row 83 doesn't contain data for all columns           |
+| Warning | 1261 | Row 83 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 84       |
+| Warning | 1261 | Row 84 doesn't contain data for all columns           |
+| Warning | 1261 | Row 84 doesn't contain data for all columns           |
+| Warning | 1261 | Row 84 doesn't contain data for all columns           |
+| Warning | 1261 | Row 84 doesn't contain data for all columns           |
+| Warning | 1261 | Row 84 doesn't contain data for all columns           |
+| Warning | 1261 | Row 84 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 85       |
+| Warning | 1261 | Row 85 doesn't contain data for all columns           |
+| Warning | 1261 | Row 85 doesn't contain data for all columns           |
+| Warning | 1261 | Row 85 doesn't contain data for all columns           |
+| Warning | 1261 | Row 85 doesn't contain data for all columns           |
+| Warning | 1261 | Row 85 doesn't contain data for all columns           |
+| Warning | 1261 | Row 85 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 86       |
+| Warning | 1261 | Row 86 doesn't contain data for all columns           |
+| Warning | 1261 | Row 86 doesn't contain data for all columns           |
+| Warning | 1261 | Row 86 doesn't contain data for all columns           |
+| Warning | 1261 | Row 86 doesn't contain data for all columns           |
+| Warning | 1261 | Row 86 doesn't contain data for all columns           |
+| Warning | 1261 | Row 86 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 87       |
+| Warning | 1261 | Row 87 doesn't contain data for all columns           |
+| Warning | 1261 | Row 87 doesn't contain data for all columns           |
+| Warning | 1261 | Row 87 doesn't contain data for all columns           |
+| Warning | 1261 | Row 87 doesn't contain data for all columns           |
+| Warning | 1261 | Row 87 doesn't contain data for all columns           |
+| Warning | 1261 | Row 87 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 88       |
+| Warning | 1261 | Row 88 doesn't contain data for all columns           |
+| Warning | 1261 | Row 88 doesn't contain data for all columns           |
+| Warning | 1261 | Row 88 doesn't contain data for all columns           |
+| Warning | 1261 | Row 88 doesn't contain data for all columns           |
+| Warning | 1261 | Row 88 doesn't contain data for all columns           |
+| Warning | 1261 | Row 88 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 89       |
+| Warning | 1261 | Row 89 doesn't contain data for all columns           |
+| Warning | 1261 | Row 89 doesn't contain data for all columns           |
+| Warning | 1261 | Row 89 doesn't contain data for all columns           |
+| Warning | 1261 | Row 89 doesn't contain data for all columns           |
+| Warning | 1261 | Row 89 doesn't contain data for all columns           |
+| Warning | 1261 | Row 89 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 90       |
+| Warning | 1261 | Row 90 doesn't contain data for all columns           |
+| Warning | 1261 | Row 90 doesn't contain data for all columns           |
+| Warning | 1261 | Row 90 doesn't contain data for all columns           |
+| Warning | 1261 | Row 90 doesn't contain data for all columns           |
+| Warning | 1261 | Row 90 doesn't contain data for all columns           |
+| Warning | 1261 | Row 90 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 91       |
+| Warning | 1261 | Row 91 doesn't contain data for all columns           |
+| Warning | 1261 | Row 91 doesn't contain data for all columns           |
+| Warning | 1261 | Row 91 doesn't contain data for all columns           |
+| Warning | 1261 | Row 91 doesn't contain data for all columns           |
+| Warning | 1261 | Row 91 doesn't contain data for all columns           |
+| Warning | 1261 | Row 91 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 92       |
+| Warning | 1261 | Row 92 doesn't contain data for all columns           |
+| Warning | 1261 | Row 92 doesn't contain data for all columns           |
+| Warning | 1261 | Row 92 doesn't contain data for all columns           |
+| Warning | 1261 | Row 92 doesn't contain data for all columns           |
+| Warning | 1261 | Row 92 doesn't contain data for all columns           |
+| Warning | 1261 | Row 92 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 93       |
+| Warning | 1261 | Row 93 doesn't contain data for all columns           |
+| Warning | 1261 | Row 93 doesn't contain data for all columns           |
+| Warning | 1261 | Row 93 doesn't contain data for all columns           |
+| Warning | 1261 | Row 93 doesn't contain data for all columns           |
+| Warning | 1261 | Row 93 doesn't contain data for all columns           |
+| Warning | 1261 | Row 93 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 94       |
+| Warning | 1261 | Row 94 doesn't contain data for all columns           |
+| Warning | 1261 | Row 94 doesn't contain data for all columns           |
+| Warning | 1261 | Row 94 doesn't contain data for all columns           |
+| Warning | 1261 | Row 94 doesn't contain data for all columns           |
+| Warning | 1261 | Row 94 doesn't contain data for all columns           |
+| Warning | 1261 | Row 94 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 95       |
+| Warning | 1261 | Row 95 doesn't contain data for all columns           |
+| Warning | 1261 | Row 95 doesn't contain data for all columns           |
+| Warning | 1261 | Row 95 doesn't contain data for all columns           |
+| Warning | 1261 | Row 95 doesn't contain data for all columns           |
+| Warning | 1261 | Row 95 doesn't contain data for all columns           |
+| Warning | 1261 | Row 95 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 96       |
+| Warning | 1261 | Row 96 doesn't contain data for all columns           |
+| Warning | 1261 | Row 96 doesn't contain data for all columns           |
+| Warning | 1261 | Row 96 doesn't contain data for all columns           |
+| Warning | 1261 | Row 96 doesn't contain data for all columns           |
+| Warning | 1261 | Row 96 doesn't contain data for all columns           |
+| Warning | 1261 | Row 96 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 97       |
+| Warning | 1261 | Row 97 doesn't contain data for all columns           |
+| Warning | 1261 | Row 97 doesn't contain data for all columns           |
+| Warning | 1261 | Row 97 doesn't contain data for all columns           |
+| Warning | 1261 | Row 97 doesn't contain data for all columns           |
+| Warning | 1261 | Row 97 doesn't contain data for all columns           |
+| Warning | 1261 | Row 97 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 98       |
+| Warning | 1261 | Row 98 doesn't contain data for all columns           |
+| Warning | 1261 | Row 98 doesn't contain data for all columns           |
+| Warning | 1261 | Row 98 doesn't contain data for all columns           |
+| Warning | 1261 | Row 98 doesn't contain data for all columns           |
+| Warning | 1261 | Row 98 doesn't contain data for all columns           |
+| Warning | 1261 | Row 98 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 99       |
+| Warning | 1261 | Row 99 doesn't contain data for all columns           |
+| Warning | 1261 | Row 99 doesn't contain data for all columns           |
+| Warning | 1261 | Row 99 doesn't contain data for all columns           |
+| Warning | 1261 | Row 99 doesn't contain data for all columns           |
+| Warning | 1261 | Row 99 doesn't contain data for all columns           |
+| Warning | 1261 | Row 99 doesn't contain data for all columns           |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 100      |
+| Warning | 1261 | Row 100 doesn't contain data for all columns          |
+| Warning | 1261 | Row 100 doesn't contain data for all columns          |
+| Warning | 1261 | Row 100 doesn't contain data for all columns          |
+| Warning | 1261 | Row 100 doesn't contain data for all columns          |
+| Warning | 1261 | Row 100 doesn't contain data for all columns          |
+| Warning | 1261 | Row 100 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 101      |
+| Warning | 1261 | Row 101 doesn't contain data for all columns          |
+| Warning | 1261 | Row 101 doesn't contain data for all columns          |
+| Warning | 1261 | Row 101 doesn't contain data for all columns          |
+| Warning | 1261 | Row 101 doesn't contain data for all columns          |
+| Warning | 1261 | Row 101 doesn't contain data for all columns          |
+| Warning | 1261 | Row 101 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 102      |
+| Warning | 1261 | Row 102 doesn't contain data for all columns          |
+| Warning | 1261 | Row 102 doesn't contain data for all columns          |
+| Warning | 1261 | Row 102 doesn't contain data for all columns          |
+| Warning | 1261 | Row 102 doesn't contain data for all columns          |
+| Warning | 1261 | Row 102 doesn't contain data for all columns          |
+| Warning | 1261 | Row 102 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 103      |
+| Warning | 1261 | Row 103 doesn't contain data for all columns          |
+| Warning | 1261 | Row 103 doesn't contain data for all columns          |
+| Warning | 1261 | Row 103 doesn't contain data for all columns          |
+| Warning | 1261 | Row 103 doesn't contain data for all columns          |
+| Warning | 1261 | Row 103 doesn't contain data for all columns          |
+| Warning | 1261 | Row 103 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 104      |
+| Warning | 1261 | Row 104 doesn't contain data for all columns          |
+| Warning | 1261 | Row 104 doesn't contain data for all columns          |
+| Warning | 1261 | Row 104 doesn't contain data for all columns          |
+| Warning | 1261 | Row 104 doesn't contain data for all columns          |
+| Warning | 1261 | Row 104 doesn't contain data for all columns          |
+| Warning | 1261 | Row 104 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 105      |
+| Warning | 1261 | Row 105 doesn't contain data for all columns          |
+| Warning | 1261 | Row 105 doesn't contain data for all columns          |
+| Warning | 1261 | Row 105 doesn't contain data for all columns          |
+| Warning | 1261 | Row 105 doesn't contain data for all columns          |
+| Warning | 1261 | Row 105 doesn't contain data for all columns          |
+| Warning | 1261 | Row 105 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 106      |
+| Warning | 1261 | Row 106 doesn't contain data for all columns          |
+| Warning | 1261 | Row 106 doesn't contain data for all columns          |
+| Warning | 1261 | Row 106 doesn't contain data for all columns          |
+| Warning | 1261 | Row 106 doesn't contain data for all columns          |
+| Warning | 1261 | Row 106 doesn't contain data for all columns          |
+| Warning | 1261 | Row 106 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 107      |
+| Warning | 1261 | Row 107 doesn't contain data for all columns          |
+| Warning | 1261 | Row 107 doesn't contain data for all columns          |
+| Warning | 1261 | Row 107 doesn't contain data for all columns          |
+| Warning | 1261 | Row 107 doesn't contain data for all columns          |
+| Warning | 1261 | Row 107 doesn't contain data for all columns          |
+| Warning | 1261 | Row 107 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 108      |
+| Warning | 1261 | Row 108 doesn't contain data for all columns          |
+| Warning | 1261 | Row 108 doesn't contain data for all columns          |
+| Warning | 1261 | Row 108 doesn't contain data for all columns          |
+| Warning | 1261 | Row 108 doesn't contain data for all columns          |
+| Warning | 1261 | Row 108 doesn't contain data for all columns          |
+| Warning | 1261 | Row 108 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 109      |
+| Warning | 1261 | Row 109 doesn't contain data for all columns          |
+| Warning | 1261 | Row 109 doesn't contain data for all columns          |
+| Warning | 1261 | Row 109 doesn't contain data for all columns          |
+| Warning | 1261 | Row 109 doesn't contain data for all columns          |
+| Warning | 1261 | Row 109 doesn't contain data for all columns          |
+| Warning | 1261 | Row 109 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 110      |
+| Warning | 1261 | Row 110 doesn't contain data for all columns          |
+| Warning | 1261 | Row 110 doesn't contain data for all columns          |
+| Warning | 1261 | Row 110 doesn't contain data for all columns          |
+| Warning | 1261 | Row 110 doesn't contain data for all columns          |
+| Warning | 1261 | Row 110 doesn't contain data for all columns          |
+| Warning | 1261 | Row 110 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 111      |
+| Warning | 1261 | Row 111 doesn't contain data for all columns          |
+| Warning | 1261 | Row 111 doesn't contain data for all columns          |
+| Warning | 1261 | Row 111 doesn't contain data for all columns          |
+| Warning | 1261 | Row 111 doesn't contain data for all columns          |
+| Warning | 1261 | Row 111 doesn't contain data for all columns          |
+| Warning | 1261 | Row 111 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 112      |
+| Warning | 1261 | Row 112 doesn't contain data for all columns          |
+| Warning | 1261 | Row 112 doesn't contain data for all columns          |
+| Warning | 1261 | Row 112 doesn't contain data for all columns          |
+| Warning | 1261 | Row 112 doesn't contain data for all columns          |
+| Warning | 1261 | Row 112 doesn't contain data for all columns          |
+| Warning | 1261 | Row 112 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 113      |
+| Warning | 1261 | Row 113 doesn't contain data for all columns          |
+| Warning | 1261 | Row 113 doesn't contain data for all columns          |
+| Warning | 1261 | Row 113 doesn't contain data for all columns          |
+| Warning | 1261 | Row 113 doesn't contain data for all columns          |
+| Warning | 1261 | Row 113 doesn't contain data for all columns          |
+| Warning | 1261 | Row 113 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 114      |
+| Warning | 1261 | Row 114 doesn't contain data for all columns          |
+| Warning | 1261 | Row 114 doesn't contain data for all columns          |
+| Warning | 1261 | Row 114 doesn't contain data for all columns          |
+| Warning | 1261 | Row 114 doesn't contain data for all columns          |
+| Warning | 1261 | Row 114 doesn't contain data for all columns          |
+| Warning | 1261 | Row 114 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 115      |
+| Warning | 1261 | Row 115 doesn't contain data for all columns          |
+| Warning | 1261 | Row 115 doesn't contain data for all columns          |
+| Warning | 1261 | Row 115 doesn't contain data for all columns          |
+| Warning | 1261 | Row 115 doesn't contain data for all columns          |
+| Warning | 1261 | Row 115 doesn't contain data for all columns          |
+| Warning | 1261 | Row 115 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 116      |
+| Warning | 1261 | Row 116 doesn't contain data for all columns          |
+| Warning | 1261 | Row 116 doesn't contain data for all columns          |
+| Warning | 1261 | Row 116 doesn't contain data for all columns          |
+| Warning | 1261 | Row 116 doesn't contain data for all columns          |
+| Warning | 1261 | Row 116 doesn't contain data for all columns          |
+| Warning | 1261 | Row 116 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 117      |
+| Warning | 1261 | Row 117 doesn't contain data for all columns          |
+| Warning | 1261 | Row 117 doesn't contain data for all columns          |
+| Warning | 1261 | Row 117 doesn't contain data for all columns          |
+| Warning | 1261 | Row 117 doesn't contain data for all columns          |
+| Warning | 1261 | Row 117 doesn't contain data for all columns          |
+| Warning | 1261 | Row 117 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 118      |
+| Warning | 1261 | Row 118 doesn't contain data for all columns          |
+| Warning | 1261 | Row 118 doesn't contain data for all columns          |
+| Warning | 1261 | Row 118 doesn't contain data for all columns          |
+| Warning | 1261 | Row 118 doesn't contain data for all columns          |
+| Warning | 1261 | Row 118 doesn't contain data for all columns          |
+| Warning | 1261 | Row 118 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 119      |
+| Warning | 1261 | Row 119 doesn't contain data for all columns          |
+| Warning | 1261 | Row 119 doesn't contain data for all columns          |
+| Warning | 1261 | Row 119 doesn't contain data for all columns          |
+| Warning | 1261 | Row 119 doesn't contain data for all columns          |
+| Warning | 1261 | Row 119 doesn't contain data for all columns          |
+| Warning | 1261 | Row 119 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 120      |
+| Warning | 1261 | Row 120 doesn't contain data for all columns          |
+| Warning | 1261 | Row 120 doesn't contain data for all columns          |
+| Warning | 1261 | Row 120 doesn't contain data for all columns          |
+| Warning | 1261 | Row 120 doesn't contain data for all columns          |
+| Warning | 1261 | Row 120 doesn't contain data for all columns          |
+| Warning | 1261 | Row 120 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 121      |
+| Warning | 1261 | Row 121 doesn't contain data for all columns          |
+| Warning | 1261 | Row 121 doesn't contain data for all columns          |
+| Warning | 1261 | Row 121 doesn't contain data for all columns          |
+| Warning | 1261 | Row 121 doesn't contain data for all columns          |
+| Warning | 1261 | Row 121 doesn't contain data for all columns          |
+| Warning | 1261 | Row 121 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 122      |
+| Warning | 1261 | Row 122 doesn't contain data for all columns          |
+| Warning | 1261 | Row 122 doesn't contain data for all columns          |
+| Warning | 1261 | Row 122 doesn't contain data for all columns          |
+| Warning | 1261 | Row 122 doesn't contain data for all columns          |
+| Warning | 1261 | Row 122 doesn't contain data for all columns          |
+| Warning | 1261 | Row 122 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 123      |
+| Warning | 1261 | Row 123 doesn't contain data for all columns          |
+| Warning | 1261 | Row 123 doesn't contain data for all columns          |
+| Warning | 1261 | Row 123 doesn't contain data for all columns          |
+| Warning | 1261 | Row 123 doesn't contain data for all columns          |
+| Warning | 1261 | Row 123 doesn't contain data for all columns          |
+| Warning | 1261 | Row 123 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 124      |
+| Warning | 1261 | Row 124 doesn't contain data for all columns          |
+| Warning | 1261 | Row 124 doesn't contain data for all columns          |
+| Warning | 1261 | Row 124 doesn't contain data for all columns          |
+| Warning | 1261 | Row 124 doesn't contain data for all columns          |
+| Warning | 1261 | Row 124 doesn't contain data for all columns          |
+| Warning | 1261 | Row 124 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 125      |
+| Warning | 1261 | Row 125 doesn't contain data for all columns          |
+| Warning | 1261 | Row 125 doesn't contain data for all columns          |
+| Warning | 1261 | Row 125 doesn't contain data for all columns          |
+| Warning | 1261 | Row 125 doesn't contain data for all columns          |
+| Warning | 1261 | Row 125 doesn't contain data for all columns          |
+| Warning | 1261 | Row 125 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 126      |
+| Warning | 1261 | Row 126 doesn't contain data for all columns          |
+| Warning | 1261 | Row 126 doesn't contain data for all columns          |
+| Warning | 1261 | Row 126 doesn't contain data for all columns          |
+| Warning | 1261 | Row 126 doesn't contain data for all columns          |
+| Warning | 1261 | Row 126 doesn't contain data for all columns          |
+| Warning | 1261 | Row 126 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 127      |
+| Warning | 1261 | Row 127 doesn't contain data for all columns          |
+| Warning | 1261 | Row 127 doesn't contain data for all columns          |
+| Warning | 1261 | Row 127 doesn't contain data for all columns          |
+| Warning | 1261 | Row 127 doesn't contain data for all columns          |
+| Warning | 1261 | Row 127 doesn't contain data for all columns          |
+| Warning | 1261 | Row 127 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 128      |
+| Warning | 1261 | Row 128 doesn't contain data for all columns          |
+| Warning | 1261 | Row 128 doesn't contain data for all columns          |
+| Warning | 1261 | Row 128 doesn't contain data for all columns          |
+| Warning | 1261 | Row 128 doesn't contain data for all columns          |
+| Warning | 1261 | Row 128 doesn't contain data for all columns          |
+| Warning | 1261 | Row 128 doesn't contain data for all columns          |
+| Warning | 1062 | Duplicate entry '' for key 'tarjetas_credito.PRIMARY' |
+| Warning | 1265 | Data truncated for column 'card_type' at row 129      |
++---------+------+-------------------------------------------------------+
+1024 rows in set (0.00 sec)
+
+mysql> ALTER TABLE titulares_tarjetas
+    -> ADD FOREIGN KEY (card_number)
+    -> REFERENCES tarjetas_credito (card_number);
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/tarjetas_credito.csv'
+    -> INTO TABLE titulares_tarjeta
+    -> FIELDS TERMINATED BY ';'
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+ERROR 1146 (42S02): Table 'sql_credit_cards.titulares_tarjeta' doesn't exist
+mysql> show tables;
++----------------------------+
+| Tables_in_sql_credit_cards |
++----------------------------+
+| tarjetas_credito           |
+| titulares_tarjetas         |
++----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/tarjetas_credito.csv'
+    -> INTO TABLE titulares_tarjetas
+    -> FIELDS TERMINATED BY ';'
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+Query OK, 0 rows affected, 25000 warnings (0.38 sec)
+Records: 5000  Deleted: 0  Skipped: 5000  Warnings: 25000
+
+mysql> desc tarjetas_credito
+    -> ;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| card_type    | varchar(25) | NO   |     | NULL    |       |
+| card_number  | varchar(16) | NO   | PRI | NULL    |       |
+| issuing_bank | varchar(16) | NO   |     | NULL    |       |
+| issue_date   | varchar(5)  | NO   |     | NULL    |       |
+| expiry_date  | varchar(5)  | NO   |     | NULL    |       |
+| billing_date | varchar(2)  | NO   |     | NULL    |       |
+| credit_limit | varchar(6)  | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc titulares_tarjetas;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| card_number      | varchar(16) | NO   | PRI | NULL    |       |
+| card_holder_name | varchar(50) | NO   |     | NULL    |       |
+| cvv_cvv2         | varchar(4)  | NO   |     | NULL    |       |
+| card_pin         | varchar(4)  | NO   |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/tarjetas_credito.csv'
+    -> FIELDS TERMINATED BY ';'
+    -> INTO TABLE titulares_tarjeta^C
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/tarjetas_credito.csv'
+    -> INTO TABLE tarjetas_credito
+    -> FIELDS TERMINATED BY ','
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+Query OK, 16 rows affected, 7603 warnings (0.04 sec)
+Records: 5000  Deleted: 0  Skipped: 4984  Warnings: 7603
+
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/titulares_tarjetas.csv'
+    -> FIELDS TERMINATED BY ','
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES' at line 2
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/tarjetas_credito.csv'
+    -> FIELDS TERMINATED BY ','
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES' at line 2
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Josep/Documents/Programacion/progarmacion_web/ms_ds_dl/titulares_tarjetas.csv'
+    -> INTO TABLE titulares_tarjetas
+    -> FIELDS TERMINATED BY ','
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
+Query OK, 5000 rows affected, 4530 warnings (0.35 sec)
+Records: 5000  Deleted: 0  Skipped: 0  Warnings: 4530
+
+mysql> ^A^C
+mysql> mysqldump -u root -p sql_credit_cards > credit_cards.sql
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqldump -u root -p sql_credit_cards > credit_cards.sql' at line 1
+mysql> exit
+Bye
+PS C:\Users\Josep> mysqldump -u root -p sql_credit_cards > credit_cards.sql
+Enter password: ************
+PS C:\Users\Josep>
